@@ -14,6 +14,34 @@
 
           Upon submitting the form, simply print the value to the console
       -->
+      <form [formGroup]="signupForm" (ngOnSubmit)="onSubmit()">
+      <div formGroupName="userData">
+        <div class="formGroup">
+          <label for="projectName">Project Name</label>
+          <input
+          type="text"
+          id="projectName"
+          formControlName="projectName"
+          class="form-control">
+          <span *ngIf="!signupForm.get('userData.projectName').valid && signupForm.get('userData.projectName').touched"
+          class="help-block">
+          <span *ngIf="signupForm.get('userData.projectName').errors['nameIsForbidden']">This name is invalid!</span>
+          <span *ngIf="signupForm.get('userData.projectName').errors['required']">Project Name is required!</span>
+          </span>
+          <div class="form-group">
+          <label for="email">email</label>
+          <input
+          type="text"
+          id="email"
+          formControlName="email"
+          class="form-control">
+          <span
+          *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+          class="help-block">Please enter a valid email address</span>
+          </div>
+        </div>
+      </div>
+    </form>
     </div>
   </div>
 </div>
