@@ -18,19 +18,32 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.signupForm = new FormGroup({
       'userData': new FormGroup({
-        'projectName' : new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-        'email' : new FormControl(null, [Validators.required, Validators.email])
+        'projectName' : new FormControl(null, [Validators.required, this.forbiddenProjectName]),
+        'email' : new FormControl(null, [Validators.required, Validators.email]),
+        'projectStatus': new FormControl('critical')
       })
     })
   }
   onSubmit() {
     console.log(this.signupForm);
    }
-   forbiddenNames(control: FormControl): {[s: string]: boolean} {
-    if (this.forbiddenProjectNames.indexOf(control.value) !== -1) {
-      return {'nameIsForbidden': true};
-    }
-    return null;
+  //  forbiddenNames(control: FormControl): {[s: string]: boolean} {
+  //   if (this.forbiddenProjectNames.indexOf(control.value) !== -1) {
+  //     return {'nameIsForbidden': true};
+  //   }
+  //   return null;
+  // }
+  forbiddenProjectName(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'Test') {
+          resolve({'projectNameIsForbidden': true});
+        } else {
+          resolve(null);
+        }
+      }, 1500);
+    });
+    return promise;
   }
 }
 
